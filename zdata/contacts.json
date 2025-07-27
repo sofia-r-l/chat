@@ -1,0 +1,17 @@
+
+[
+  {
+    "id": 1,
+    "nombre": "Juan Pérez",
+    "email": "juan.perez@unah.hn",
+    "online": true
+  },
+  {
+    "id": 2,
+    "nombre": "Ana López",
+    "email": "ana.lopez@unah.hn",
+    "online": true
+  }
+]
+
+

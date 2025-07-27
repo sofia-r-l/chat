@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "nombre": "Juan Pérez",
+    "email": "juan.perez@unah.hn",
+    "password": "1234",
+    "estado": "offline",
+    "ultima_conexion": "2024-08-01T10:00:00"
+  },
+  {
+    "id": 2,
+    "nombre": "Ana López",
+    "email": "ana.lopez@unah.hn",
+    "password": "abcd",
+    "estado": "offline",
+    "ultima_conexion": "2024-08-02T14:30:00"
+  }
+]

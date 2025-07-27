@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Biblioteca UNAH</title>
+
+  <!-- Bootstrap CSS & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet" />
+  <link rel="stylesheet" href="./../../assets/css/forms.css">
+  <link rel="stylesheet" href="./../../assets/css/library.css">
+</head>
+
+<body>
+
+  <display-header></display-header>
+  <div class="notification-container" id="notification-container"></div>
+  <!-- Hero Section -->
+  <header class="hero-section py-5 mb-5">
+    <div class="container text-center py-5">
+      <h1 class="display-4 fw-bold mb-4">Sistema Bibliotecario</h1>
+      <p class="lead mb-4">Bienvenido a la colección de recursos de la UNAH</p>
+      <!-- Buscador -->
+      <form class="row g-2 justify-content-center">
+        <div class="col-auto">
+          <select class="form-select">
+            <option selected>Catálogo</option>
+            <option>Autor</option>
+            <option>Etiqueta</option>
+          </select>
+        </div>
+        <div class="col-auto">
+          <input type="text" class="form-control" placeholder="Buscar..." />
+        </div>
+        <div class="col-auto">
+          <select class="form-select">
+            <option>Todas las bibliotecas</option>
+          </select>
+        </div>
+        <div class="col-auto">
+          <button type="submit" class="btn btn-primary">Ir</button>
+        </div>
+      </form>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Botón agregar libro -->
+    <section class="my-4">
+      <button class="btn btn-success btn-role-admin" onclick="abrirModalAgregar()">
+        <i class="bi bi-plus-lg"></i> Agregar libro
+      </button>
+    </section>
+
+    <!-- Resultados -->
+    <div id="contenedor-resultados" class="my-4">
+      <!-- <script>cargarLibros()</script>-->
+    </div>
+
+
+
+    <!-- Modal para agregar/editar libro -->
+    <div id="modal-libro" class="modal fade" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal-titulo">Agregar/Editar Libro</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <form method="POST" id="form-libro" enctype="multipart/form-data">
+            <div class="modal-body">
+
+              <!-- INPUT DE TITULO -->
+              <div class="mb-3">
+                <label for="titulo" class="form-label">Título:</label>
+                <input type="text" class="form-control" id="titulo" name="titulo"
+                  placeholder="Ingrese el título del libro" required>
+                <small class="form-text text-muted">El título debe tener entre 5 y 70 caracteres</small>
+              </div>
+
+            <!-- INPUT DE AUTORES -->
+<div class="mb-3 position-relative">
+  <label for="autor" class="form-label">Autor:</label>
+  <input type="text" class="form-control" id="autor" name="autor"
+    placeholder="Ejemplo: Juan A. Pérez o J. A. Pérez" required autocomplete="off">
+  <!-- Contenedor de resultados para autores (único) -->
+  <div id="autor-results" class="search-results-dropdown">
+    <ul class="list-group"></ul>
+  </div>
+  <small class="form-text text-muted">Formato: Cualquier parte puede ser inicial con punto (ej: Juan A.
+    Pérez, J. A. Pérez, Juan A. P.)</small>
+</div>
+
+<!-- INPUT DE ETIQUETAS GENERALES -->
+<div class="mb-3 position-relative">
+  <label for="etiquetas" class="form-label">Etiquetas:</label>
+  <div id="etiquetas-chips-container" class="form-control chips-input-container">
+    <!-- Chips se insertarán aquí -->
+    <input type="text" id="etiquetas-input" placeholder="Escribe una etiqueta y presiona Enter o Coma" autocomplete="off">
+  </div>
+  <!-- Contenedor de resultados para etiquetas (único) -->
+  <div id="etiquetas-results" class="search-results-dropdown">
+    <ul class="list-group"></ul>
+  </div>
+  <input type="hidden" id="etiquetas-ids" name="etiquetas_ids">
+  <input type="hidden" id="etiquetas-names" name="etiquetas">
+  <input type="hidden" id="etiquetas" name="etiquetas" required>
+  <small class="form-text text-muted">Presiona Enter o Coma para agregar. Haz clic en la 'x' para eliminar
+    cualquier etiqueta.</small>
+</div>
+
+<!-- INPUT DE CÓDIGOS DE CLASE -->
+<div class="mb-3 position-relative">
+  <label for="codigos-clase-input" class="form-label">Códigos de Clase:</label>
+  <div id="codigos-chips-container" class="form-control chips-input-container">
+    <!-- Chips se insertarán aquí -->
+    <input type="text" id="codigos-clase-input" placeholder="Buscar códigos..." autocomplete="off">
+  </div>
+  <!-- Contenedor de resultados para códigos (único) -->
+  <div id="codigos-results" class="search-results-dropdown">
+    <ul class="list-group"></ul>
+  </div>
+  <input type="hidden" id="codigos-clase-ids" name="codigos_clase_ids">
+</div>
+
+              <!-- SUBIR RECURSOS -->
+              <div class="mb-3">
+                <label for="archivo" class="form-label">Archivo del libro:</label>
+                <input type="file" class="form-control" id="archivo" name="archivo" accept=".pdf" required>
+                <small id="archivo-help" class="form-text text-muted">Solo se permiten archivos PDF con peso no mayor a
+                  2MB</small>
+                <small id="archivo-edit-help" class="form-text text-muted" style="display:none; color:#888;">
+                  No es posible cambiar el archivo PDF al editar. Si necesitas reemplazar el archivo, elimina el libro y
+                  vuelve a crearlo.
+                </small>
+              </div>
+
+            </div>
+
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Guardar</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal de confirmación de eliminación -->
+  <div class="modal " id="confirm-delete-modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Confirmar eliminación</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ¿Estás seguro de que deseas eliminar este libro?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger" id="confirm-delete-btn">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!--paginacion -->
+  <div id="paginacion" style="display: flex;">
+    <button onclick="paginaAnterior()">Anterior</button>
+    <span id="pagina-actual">6</span>
+    <span class="info-paginas mx-2">Página 6 de 8 (32 libros)</span><button
+      onclick="paginaSiguiente()">Siguiente</button>
+  </div>
+
+
+  <!-- Footer -->
+  <unah-footer></unah-footer>
+
+
+
+
+  <!-- Loader  -->
+  <div id="loader" style="display:none; position:fixed; top:20px; right:20px;">
+    <div class="spinner-border text-primary"></div>
+  </div>
+
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="../../assets/js/modules/main.js"></script>
+  <script src="../../assets/js/library/labels.js"></script>
+  <script src="../../assets/js/library/pagination.js"></script>
+  <script src="../../assets/js/library/notification.js"></script>
+  <script src="../../assets/js/library/crudFile.js"></script>
+  <script src="../../assets/js/library/download.js"></script>
+  <script src="../../assets/js/library/loadFiles.js"></script>
+  <script src="../../assets/js/library/searchFiles.js"></script>
+  <script src="../../assets/js/library/session.js"></script>
+  <script src="../../assets/js/library/endpoints.js"></script>
+  <script src="../../assets/js/library/view.js"></script>
+  <script src="../../assets/js/library/busquedaTags.js"></script>
+
+</body>
+
+</html>

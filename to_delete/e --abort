@@ -1,0 +1,23 @@
+* [33m553c745[m[33m ([m[1;36mHEAD[m[33m)[m avance formularios
+* [33m673a328[m persisten of data connected to database
+* [33m8ab1439[m persisten of data connected to database
+*   [33mb2f0dcf[m[33m ([m[1;31morigin/main[m[33m)[m Merge remote-tracking branch 'origin/master'
+[32m|[m[33m\[m  
+[32m|[m * [33ma574f54[m[33m ([m[1;31morigin/master[m[33m)[m Avance en seccion de Codigos Clases orientados a Crear Libros en Biblioteca. mas conexion a BD con datos cargados en ella.
+[32m|[m * [33m2c8ed61[m Agregando funcionalidad de codigos de clases a los recursos agregados (libros), para obtener una relacion libro-clase
+* [33m|[m [33m4c5e9c3[m Se agrega el MVC para obtener libros recien agregados ordenados por fecha haciendo consulta directa en la base de datos
+[33m|[m[33m/[m  
+* [33m6a5b646[m .
+* [33mdf9063f[m se agrego DDL_academic, trigger para actualizar y agregar bitacora de solicitudes en modulo admisiones, db_academic para conexion con base de datos
+* [33m41771ba[m progress update in backend
+* [33mb0aaceb[m reorganitation structure JS library
+* [33mdd89b6f[m Library module created and 70% functoinal
+* [33m87bfa85[m Library module created and 70% functoinal
+* [33m619da2e[m Renamed some folders and functions to English
+*   [33m10522ab[m progres of the formulary
+[34m|[m[35m\[m  
+[34m|[m * [33maf3bcc3[m functionality tests CI
+* [35m|[m [33mb6c6332[m progres of the formulary
+[35m|[m[35m/[m  
+* [33m808fefd[m Directory restructuring
+* [33ma8814b4[m first commit
